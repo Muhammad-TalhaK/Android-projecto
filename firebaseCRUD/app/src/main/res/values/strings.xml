@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">firebaseCRUD</string>
+    <string name="username_hint">Enter Username</string>
+</resources>
