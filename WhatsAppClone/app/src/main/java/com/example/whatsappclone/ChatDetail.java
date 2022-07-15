@@ -106,21 +106,22 @@ public class ChatDetail extends AppCompatActivity {
                 String messageCD = binding.messageCD.getText().toString();
                 if(TextUtils.isEmpty(binding.messageCD.getText().toString())){
                     binding.messageCD.setError("Message can't be empty");
-                }
-                final Messages messagesModel = new Messages(senderId, messageCD);
-                messagesModel.setTimeStamp(new Date().getTime());
-                binding.messageCD.setText("");
-                database.getReference().child("Chats").child(senderRoom).push().setValue(messagesModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        database.getReference().child("Chats").child(receiverRoom).push().setValue(messagesModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
+                }else{
+                    final Messages messagesModel = new Messages(senderId, messageCD);
+                    messagesModel.setTimeStamp(new Date().getTime());
+                    binding.messageCD.setText("");
+                    database.getReference().child("Chats").child(senderRoom).push().setValue(messagesModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            database.getReference().child("Chats").child(receiverRoom).push().setValue(messagesModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
 
-                            }
-                        });
-                    }
-                });
+                                }
+                            });
+                        }
+                    });
+                }
             }
         });
     }

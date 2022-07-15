@@ -13,6 +13,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.whatsappclone.Adapters.FragmentAdapter;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -41,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
         vp= findViewById(R.id.vp_layout);
         vp.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
         tb.setupWithViewPager(vp);
+
+        //ad initialization
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
 
     }
 
