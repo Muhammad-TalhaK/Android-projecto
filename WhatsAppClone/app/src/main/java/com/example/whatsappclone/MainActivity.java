@@ -1,16 +1,16 @@
 package com.example.whatsappclone;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.whatsappclone.Adapters.FragmentAdapter;
 import com.google.android.gms.ads.MobileAds;
@@ -37,13 +37,14 @@ public class MainActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
 // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
 
         auth = FirebaseAuth.getInstance();
-        tb= findViewById(R.id.tb_layout);
-        vp= findViewById(R.id.vp_layout);
+        tb = findViewById(R.id.tb_layout);
+        vp = findViewById(R.id.vp_layout);
         vp.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
         tb.setupWithViewPager(vp);
+
 
         //ad initialization
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
+
 
     }
 

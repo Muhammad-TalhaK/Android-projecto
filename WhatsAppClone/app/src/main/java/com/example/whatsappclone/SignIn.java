@@ -1,5 +1,6 @@
 package com.example.whatsappclone;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,15 +11,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.whatsappclone.Models.User;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnPaidEventListener;
+import com.google.android.gms.ads.ResponseInfo;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,7 +42,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
-@SuppressWarnings("ALL")
+
 public class SignIn extends AppCompatActivity {
     EditText email,password;
     TextView signUp;
@@ -44,6 +52,7 @@ public class SignIn extends AppCompatActivity {
     FirebaseAuth auth;
     DatabaseReference myRef;
     private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +63,8 @@ public class SignIn extends AppCompatActivity {
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
 // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
 // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimary));
 
@@ -113,6 +120,8 @@ public class SignIn extends AppCompatActivity {
             }
         });
 
+
+
         // Configure sign-in to request the user's ID, email address, and basic under details.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -136,7 +145,7 @@ public class SignIn extends AppCompatActivity {
             }).addOnFailureListener(e -> Toast.makeText(SignIn.this, "Email or Password is incorrect", Toast.LENGTH_SHORT).show());
         });
 
-        signUp.setOnClickListener(v -> startActivity(new Intent(SignIn.this,SignUp.class)));
+        signUp.setOnClickListener(v -> {startActivity(new Intent(SignIn.this, SignUp.class));});
 
         //Google Log in
         googleLogin.setOnClickListener(v -> LogIn());

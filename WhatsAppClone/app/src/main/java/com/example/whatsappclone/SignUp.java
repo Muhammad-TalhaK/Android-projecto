@@ -1,19 +1,20 @@
 package com.example.whatsappclone;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import static android.content.ContentValues.TAG;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.whatsappclone.Models.User;
 import com.example.whatsappclone.databinding.ActivitySignUpBinding;
@@ -30,6 +31,7 @@ public class SignUp extends AppCompatActivity {
     ActivitySignUpBinding binding;
     FirebaseAuth auth;
     DatabaseReference myRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,7 @@ public class SignUp extends AppCompatActivity {
         ProgressDialog progressBar = new ProgressDialog(this);
         progressBar.setTitle("Creating User");
         progressBar.setMessage("User is being created!");
+
 
         getSupportActionBar().hide();
         auth = FirebaseAuth.getInstance();

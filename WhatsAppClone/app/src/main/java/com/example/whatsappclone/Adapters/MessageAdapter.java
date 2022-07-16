@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.whatsappclone.Models.Messages;
 import com.example.whatsappclone.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -56,28 +53,17 @@ public class MessageAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Messages messages = messagesList.get(position);
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                new AlertDialog.Builder(context)
-                        .setTitle("Delete Message")
-                        .setMessage("Are You Sure You Want to Delete This Message?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String senderRoom = FirebaseAuth.getInstance().getUid() + recId;
-                                FirebaseDatabase.getInstance().getReference("Chats")
-                                        .child(senderRoom).child(messages.getMsgId()).setValue(null);
-                            }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).show();
+        holder.itemView.setOnLongClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Delete Message")
+                    .setMessage("Are You Sure You Want to Delete This Message?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        String senderRoom = FirebaseAuth.getInstance().getUid() + recId;
+                        FirebaseDatabase.getInstance().getReference("Chats")
+                                .child(senderRoom).child(messages.getMsgId()).setValue(null);
+                    }).setNegativeButton("No", (dialog, which) -> dialog.dismiss()).show();
 
-                return false;
-            }
+            return false;
         });
 
         if(holder.getClass()== SenderViewHolder.class){
@@ -104,7 +90,7 @@ public class MessageAdapter extends RecyclerView.Adapter{
         }
     }
 
-    public class ReceiverViewHolder extends RecyclerView.ViewHolder{
+    public static class ReceiverViewHolder extends RecyclerView.ViewHolder{
         TextView rcvMsg,rcvTime;
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -113,7 +99,7 @@ public class MessageAdapter extends RecyclerView.Adapter{
         }
     }
 
-    public class SenderViewHolder extends RecyclerView.ViewHolder{
+    public static class SenderViewHolder extends RecyclerView.ViewHolder{
         TextView sndMsg,sndTime;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
